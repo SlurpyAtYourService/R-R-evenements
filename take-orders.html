@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Take Orders</title>
+</head>
+<body>
+  <h1>Employee Login</h1>
+  <form id="loginForm">
+    <input name="code" placeholder="Enter Authenticator Code" required>
+    <button type="submit">Login</button>
+  </form>
+
+  <div id="ordersSection" style="display:none;">
+    <h2>Pending Orders</h2>
+    <ul id="ordersList"></ul>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const code = e.target.code.value;
+
+      const res = await fetch("/api/auth/totp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code })
+      });
+
+      const data = await res.json();
+      if (data.ok) {
+        document.getElementById("loginForm").style.display = "none";
+        loadOrders();
+      } else {
+        alert("Invalid code");
+      }
+    });
+
+    async function loadOrders() {
+      const res = await fetch("/api/orders");
+      const data = await res.json();
+      if (data.ok) {
+        const list = document.getElementById("ordersList");
+        list.innerHTML = "";
+        data.orders.forEach(o => {
+          const li = document.createElement("li");
+          li.textContent = `${o.name} - ${o.items.join(", ")} - ${o.address}`;
+          list.appendChild(li);
+        });
+        document.getElementById("ordersSection").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
