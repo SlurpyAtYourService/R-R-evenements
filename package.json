@@ -1,0 +1,19 @@
+{
+  "name": "food-orders-totp",
+  "version": "1.0.0",
+  "description": "Simple order system with TOTP-protected admin (Google Authenticator)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "express-session": "^1.17.3",
+    "helmet": "^7.1.0",
+    "qrcode": "^1.5.3",
+    "speakeasy": "^2.0.0"
+  }
+}
