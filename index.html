@@ -2,10 +2,59 @@
 <html>
 <head>
   <title>Food Orders</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 300px;
+    }
+    h1 {
+      margin-bottom: 1.5rem;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 0.5rem 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .order-btn {
+      background: #28a745;
+      color: white;
+    }
+    .order-btn:hover {
+      background: #218838;
+    }
+    .take-btn {
+      background: #007bff;
+      color: white;
+    }
+    .take-btn:hover {
+      background: #0056b3;
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome</h1>
-  <button onclick="location.href='order.html'">Make an Order</button>
-  <button onclick="location.href='take-orders.html'">Take Orders</button>
+  <div class="container">
+    <h1>Welcome</h1>
+    <button class="order-btn" onclick="location.href='order.html'">Make an Order</button>
+    <button class="take-btn" onclick="location.href='take-orders.html'">Take Orders</button>
+  </div>
 </body>
 </html>
