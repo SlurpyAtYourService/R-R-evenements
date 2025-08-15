@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Make an Order</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 1rem;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .items {
+      margin-top: 0.5rem;
+    }
+    .items label {
+      font-weight: normal;
+    }
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #28a745;
+      color: white;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Place Your Order</h1>
+    <form id="orderForm">
+      <label>Your Name:</label>
+      <input type="text" name="name" required>
+
+      <label>Your Address:</label>
+      <input type="text" name="address" required>
+
+      <label>Select Items:</label>
+      <div class="items">
+        <input type="checkbox" name="items" value="Pizza"> Pizza<br>
+        <input type="checkbox" name="items" value="Burger"> Burger<br>
+        <input type="checkbox" name="items" value="Salad"> Salad<br>
+      </div>
+
+      <button type="submit">Submit Order</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("orderForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const items = formData.getAll("items");
+      const name = formData.get("name");
+      const address = formData.get("address");
+
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, address, items })
+      });
+
+      const data = await res.json();
+      if (data.ok) {
+        alert("Order placed successfully!");
+        e.target.reset();
+      } else {
+        alert("Error placing order.");
+      }
+    });
+  </script>
+</body>
+</html>
