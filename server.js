@@ -42,6 +42,7 @@ app.use(
   })
 );
 
+// Serve static files (public/index.html, CSS, JS, etc.)
 app.use(express.static(path.join(__dirname, "public")));
 
 const readOrders = () => JSON.parse(fs.readFileSync(ORDERS_FILE, "utf-8"));
@@ -137,6 +138,15 @@ app.post("/api/orders", ordersLimiter, (req, res) => {
 
 app.get("/api/orders", requireAuth, (req, res) => {
   res.json({ ok: true, orders: readOrders() });
+});
+
+// ==========================
+// Default Homepage Route
+// ==========================
+app.get("/", (req, res) => {
+  // If you have public/index.html, this will be served automatically by express.static()
+  // This fallback ensures you don't see "Cannot GET /"
+  res.send("<h1>Welcome 🚀</h1><p>Go to /admin/setup to configure TOTP</p>");
 });
 
 app.listen(PORT, () =>
